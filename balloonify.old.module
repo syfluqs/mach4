@@ -1,0 +1,22 @@
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#SingleInstance , force
+
+title = %1%
+msg = %2%
+time = %3%
+opt = %4%
+
+t := 1000*time+1
+
+if (msg="" && title="" && time="" && opt ="")
+{
+ExitApp
+}
+else
+{
+TrayTip , %title% , %msg% , %time%, %opt%
+Sleep, %t%
+ExitApp
+}

@@ -1,0 +1,10 @@
+#Don't want exe files and the jar files
+AutoHotkey.exe
+dist/*.jar
+
+#ignore the old folder
+old
+
+#ignore the filedb.txt
+filedb.txt
+notes.nts

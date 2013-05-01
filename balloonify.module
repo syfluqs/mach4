@@ -1,0 +1,34 @@
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#SingleInstance , force
+#NoTrayIcon
+
+title = %1%
+msg = %2%
+time = %3%
+opt = %4%
+t := 1000*time+1
+
+if (msg="" && title="" && time="" && opt ="")
+{
+ExitApp
+}
+else
+{
+
+Gui, Color, FFFFFF
+Gui -Caption +ToolWindow
+Gui, Add, Picture, section, %A_ScriptDir%\pics\error.png
+gui, font, s15, Calibri
+Gui, Add, Text, xp+67 yp+8 section, %title%
+gui, font, s10, Calibri
+Gui, Add, Text, xp yp+25, %msg%
+Gui, show
+
+;SplashImage , %A_ScriptDir%\pics\error.png, B M C11, %title%, %msg%, %title%, Calibri
+Sleep, %t%
+ExitApp
+}
+
+ExitApp

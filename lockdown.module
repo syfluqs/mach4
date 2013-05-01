@@ -1,0 +1,65 @@
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#persistent
+#SingleInstance , force
+
+tp=
+sp=
+
+state = %1%
+
+
+IniRead, tp, settings.ini, lockdown, taskmgr_path, C:\Windows\system32\taskmgr.exe
+
+
+lockdown( state , tp ,sp )
+
+if (state = "on")
+{
+LAlt::Down
+LCtrl::Down
+RAlt::Down
+RCtrl::Down
+LShift::Down
+RShift::Down
+LWin::Down
+RWin::Down
+Esc::Down
+}
+
+
+
+
+
+lockdown(input,tp,sp)
+{
+if (input=="on")
+{
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe , Debugger, %A_ScriptDir%\rep.exe
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\shutdown.exe , Debugger, %A_ScriptDir%\rep.exe
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe , Debugger, %A_ScriptDir%\rep.exe
+Winhide, ahk_class Shell_TrayWnd
+Winhide, Start ahk_class Button
+
+WinSet, region, 500-500 ,  Start menu ahk_class DV2ControlHost,, ,
+
+}
+else if (input=="off")
+{
+
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\taskmgr.exe , Debugger, %tp%
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\shutdown.exe , Debugger, %sp%
+RegWrite, REG_SZ, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe , Debugger, %sp%
+Winshow, ahk_class Shell_TrayWnd
+Winshow, Start ahk_class Button
+
+exitapp
+}
+else
+{
+exitapp
+}
+}
+
+return

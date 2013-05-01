@@ -1,0 +1,56 @@
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#SingleInstance off
+#NoTrayIcon
+
+l=
+j=
+ret = 
+
+cmd = %1%
+wd = %3%
+switch = %2%
+
+
+if (endswith(cmd) = true )
+{
+StringLeft, cmd, cmd, StrLen(cmd)-1
+}
+
+StringReplace, cmd, cmd, `, , ```, , 1
+
+StringMid, ss, cmd, 1 , 2 , 
+
+
+if (cmd="")
+{
+ExitApp
+}
+else
+{
+Run, %cmd% %switch%, %wd%, UseErrorLevel ,
+
+if ErrorLevel = ERROR
+Run, balloonify.exe `"Error`" `"The command coud not be executed.`nError code: %A_LastError%`n`nCheck the commands.cfg tab in settings window.`" `"3`" `"3`" ,,
+
+}
+
+endswith(a)
+{
+l := StrLen(a)
+StringGetPos, j, a, \, , l-2
+
+if (j+1=l)
+{
+ret:= true
+}
+else
+{
+ret:= false
+}
+
+return ret
+}
+
+return
